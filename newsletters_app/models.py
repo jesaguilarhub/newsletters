@@ -10,7 +10,7 @@ class Newsletter(models.Model):
     admins = models.ManyToManyField(get_user_model(), related_name='newsletters', null=True)  
     subscriptions = models.ManyToManyField(get_user_model(), through='Subscriptions')
     tags = models.ManyToManyField(Tag, on_delete=models.SET_NULL, null=True, related_name='newsletters')
-    votes = models.PositiveIntegerField(default=0)
+    votes = models.ManyToManyField(get_user_model(), through='Votes')
     target = models.PositiveIntegerField(null=False)
     frequency = models.PositiveIntegerField(null=False)
     is_published = models.BooleanField(default=False)
@@ -24,4 +24,16 @@ class Subscriptions(models.Model):
     newsletter = models.ForeignKey(Newsletter, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'newsletter'], name='unique_user_subscription')
+        ]
 
+class Votes(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True)
+    newsletter = models.ForeignKey(Newsletter, on_delete=models.SET_NULL, null=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'newsletter'], name='unique_user_vote')
+        ]

@@ -6,6 +6,8 @@ from rest_framework import status
 from rest_framework.decorators import action
 from newsletters_app.permissions import CustomPermission
 from copy import copy
+from newsletters_app.tasks import send_email
+from datetime import datetime, timedelta
 
 class NewsletterViewSet(ModelViewSet):
     queryset = Newsletter.objects.all()
@@ -78,6 +80,8 @@ class NewsletterViewSet(ModelViewSet):
     def subscribe(self, request, pk=None):
         newsletter = self.get_object()      
         newsletter.subs.add(request.user)
+        send_email_datetime = datetime.now() + timedelta(days=newsletter.frequency)
+        send_email.apply_async(eta=send_email_datetime)
         newsletter.save()
 
         return Response(status=status.HTTP_201_CREATED)

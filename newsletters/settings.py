@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'tags.apps.TagsConfig',
     'rest_framework',
     'rest_framework_simplejwt',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -133,3 +134,11 @@ REST_FRAMEWORK = {
             'rest_framework.permissions.IsAuthenticated',
         ]
     }
+
+CELERY_BROKER_URL = 'amqp://guest:guest@127.0.0.1:5672/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_HOST_USER = 'fdb9989cb728aa'
+EMAIL_HOST_PASSWORD = 'b794f0911e36f6'
+EMAIL_PORT = '2525'

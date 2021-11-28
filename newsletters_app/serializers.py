@@ -5,7 +5,7 @@ class NewsletterSerializer(ModelSerializer):
        
     class Meta:
         model = Newsletter
-        fields = ['nombre', 'id']
+        fields = '__all__'
 
 class CreateNewsletterSerializer(ModelSerializer):
 
@@ -18,5 +18,4 @@ class DetailNewsletterSerializer(ModelSerializer):
     class Meta:
         model = Newsletter
         fields = '__all__'
-        lookup_field = 'slug'
         

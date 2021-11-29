@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 class AccountTestCase(APITestCase):
     def setUp(self):
-      self.host = '127.0.0.1:8000'
+      self.host = 'http://127.0.0.1:8000'
 
     def test_create_account(self):
         response = self.client.post(

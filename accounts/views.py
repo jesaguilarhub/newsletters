@@ -3,10 +3,12 @@ from rest_framework.viewsets import ModelViewSet
 from accounts.serializers import DetailAccountSerializer, CreateAccountSerializer
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import AllowAny
 
 class AccountViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = DetailAccountSerializer
+    permission_classes = (AllowAny,)
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer_class()

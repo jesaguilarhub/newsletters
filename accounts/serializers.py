@@ -11,4 +11,4 @@ class CreateAccountSerializer(ModelSerializer):
     
     class Meta:
         model = User
-        fields = ['username', 'password', 'email', 'is_superuser', 'is_staff']
+        fields = ['username', 'password', 'email', 'first_name', 'last_name', 'is_staff']
